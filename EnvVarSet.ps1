@@ -20,7 +20,7 @@ function Test-IsAdmin {
 
 <# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
    results to a formatted table assigned to variable. Assign variable @jversion to @array and grep the values in the table, searching for anything relating
-   to the Oracle Java Platform, either JRE or JDK both 32-bit and 64-bit and store in variable.
+   to the Oracle Java Platform, either JRE or JDK both 32-bit and 64-bit and store in variable. There may be a way to simplify this subroutine.
 #>
 
 $array = @()
