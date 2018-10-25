@@ -1,14 +1,3 @@
-Check for admin rights. (done)
-
-
-
-create variable $jhome
-
-
-Get items within the folder C:\Program Files\Java\* or C:\Program Files (x86)\Java\*
-
-Output the list of items within the folder to a table
-
 Scan table for most recent Java install based on a regex that looks for jre1.8.0_* or jdk_1.8.0_*
 
 Set the appropriate string to variable $var
