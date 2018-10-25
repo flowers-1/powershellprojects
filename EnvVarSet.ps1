@@ -55,4 +55,4 @@ foreach($pc in $computers){
         $array += $obj
     }
 }
-$jversion = $array | Where-Object { $_.DisplayName } | select ComputerName, DisplayName, DisplayVersion, Publisher | ft -auto | find """Java"""
+$jversion = $array | Where-Object { $_.DisplayName } | select ComputerName, DisplayName, DisplayVersion, Publisher |where {$_.DisplayName -like "Java*"} | ft -hidetableheaders
