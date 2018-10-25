@@ -1,4 +1,4 @@
-Scan table for most recent Java install based on a regex that looks for jre1.8.0_* or jdk_1.8.0_*
+Scan table for most recent Java install based on a regex that looks for jre1.8.0_* or jdk_1.8.0_* (done)
 
 Set the appropriate string to variable $var
 
