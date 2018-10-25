@@ -20,7 +20,8 @@ function Test-IsAdmin {
 
 <# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
    results to a formatted table assigned to variable @array. Take the variable and grep the values in the table, searching for anything relating
-   to the Oracle Java Platform.
+   to the Oracle Java Platform, either JRE or JDK both 32-bit and 64-bit.
+#>
 
 $array = @()
 
@@ -54,4 +55,4 @@ foreach($pc in $computers){
         $array += $obj
     }
 }
-$array | Where-Object { $_.DisplayName } | select ComputerName, DisplayName, DisplayVersion, Publisher | ft -auto
+$array = $array | Where-Object { $_.DisplayName } | select ComputerName, DisplayName, DisplayVersion, Publisher | ft -auto | find """Java"""
