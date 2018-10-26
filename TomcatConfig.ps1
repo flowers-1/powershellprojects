@@ -1,4 +1,8 @@
-<# This script is designed to supplement the 
+<# This script is designed to perform the pre-requisites for the App Server Installation of InfoLease 10 on a client system. This script does multiple
+things:
+    1. Checks for Administrative rights on the current run;
+    2. Gets a list of the installed programs on the machine and searches the output for installed versions of the Apache Tomcat platform;
+    3. 
 
 #Checks for Administrative rights on the current running installer session.
 function Test-IsAdmin {
