@@ -1,3 +1,5 @@
+<# This script is designed to supplement the 
+
 #Checks for Administrative rights on the current running installer session.
 function Test-IsAdmin {
     try {
@@ -9,17 +11,47 @@ function Test-IsAdmin {
     }
 }
 
-#Check for installed version of Tomcat.
-$tmctversion = Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" | select DisplayName | where {$_.DisplayName -like "*Tomcat*"} | ft -hidetableheaders
+<# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
+   results to a formatted table assigned to variable. Assign variable @tmctversion to @array and grep the values in the table, searching for anything relating
+   to the Apache Tomcat Platform and store in variable @tmctversion. Note: There may be a way to simplify this subroutine.
+#>
+$array = @()
+
+foreach($pc in $computers){
+
+    $computername=$pc.computername
+
+#Define the variable to hold the location of Currently Installed Programs
+    $UninstallKey="SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
+
+#Create an instance of the Registry Object and open the HKLM base key
+    $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine',$computername)
+
+#Drill down into the Uninstall key using the OpenSubKey Method
+    $regkey=$reg.OpenSubKey($UninstallKey)
+
+#Retrieve an array of string that contain all the subkey names
+    $subkeys=$regkey.GetSubKeyNames()
+
+#Open each Subkey and use GetValue Method to return the required values for each
+    foreach($key in $subkeys){
+
+        $thisKey=$UninstallKey+"\\"+$key
+        $thisSubKey=$reg.OpenSubKey($thisKey)
+        $obj = New-Object PSObject
+        $obj | Add-Member -MemberType NoteProperty -Name "ComputerName" -Value $computername
+        $obj | Add-Member -MemberType NoteProperty -Name "DisplayName" -Value $($thisSubKey.GetValue("DisplayName"))
+        $obj | Add-Member -MemberType NoteProperty -Name "DisplayVersion" -Value $($thisSubKey.GetValue("DisplayVersion"))
+        $obj | Add-Member -MemberType NoteProperty -Name "InstallLocation" -Value $($thisSubKey.GetValue("InstallLocation"))
+        $obj | Add-Member -MemberType NoteProperty -Name "Publisher" -Value $($thisSubKey.GetValue("Publisher"))
+        $array += $obj
+    }
+}
+$tmctversion = $array | Where-Object { $_.DisplayName } | select ComputerName, DisplayName, DisplayVersion, Publisher | where {$_.DisplayName -like "Apache*"} | ft -hidetableheaders
+
+echo $tmctversion
 
 <#TODO Design a subroutine to validate the values assigned to @tmctversion are acutally valid. The below routine only tests for the presence
   of a value, even if that value is random and unrelated. For instance, assigning a value of "FOO" will still result in the script outputting "BAR" and continuing, even though "FOO"
   is not a valid value for the Tomcat software.
 #>
-if(!$tmctversion){
-    Write-Host "Please install Apache Tomcat"
-    break
-    }else{
-    Write-Host "Continuing..."
-    break
-    }
