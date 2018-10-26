@@ -1,4 +1,4 @@
-#Check for Admin rights on the current run. This could also be accomplished via #requires -RunAsAdministrator.
+<#Check for Admin rights on the current run. This could also be accomplished via #requires -RunAsAdministrator. However, this could be more robust. #>
 <#
         .SYNOPSIS
             Checks if the current Powershell instance is running with elevated privileges or not.

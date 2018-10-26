@@ -2,7 +2,9 @@
 things:
     1. Checks for Administrative rights on the current run;
     2. Gets a list of the installed programs on the machine and searches the output for installed versions of the Apache Tomcat platform;
-    3. 
+    3. If Apache Tomcat is NOT present, download it to directory where installer is running from;
+    4. Configure the program as laid out in the install guide, asking for user input when necessary.DESCRIPTION
+#>
 
 #Checks for Administrative rights on the current running installer session.
 function Test-IsAdmin {
@@ -20,25 +22,13 @@ function Test-IsAdmin {
    to the Apache Tomcat Platform and store in variable @tmctversion. Note: There may be a way to simplify this subroutine.
 #>
 $array = @()
-
 foreach($pc in $computers){
-
     $computername=$pc.computername
-
-#Define the variable to hold the location of Currently Installed Programs
-    $UninstallKey="SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"
-
-#Create an instance of the Registry Object and open the HKLM base key
-    $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine',$computername)
-
-#Drill down into the Uninstall key using the OpenSubKey Method
-    $regkey=$reg.OpenSubKey($UninstallKey)
-
-#Retrieve an array of string that contain all the subkey names
-    $subkeys=$regkey.GetSubKeyNames()
-
-#Open each Subkey and use GetValue Method to return the required values for each
-    foreach($key in $subkeys){
+    $UninstallKey="SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"   #Define the variable to hold the location of Currently Installed Programs
+    $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine',$computername)   #Create an instance of the Registry Object and open the HKLM base key
+    $regkey=$reg.OpenSubKey($UninstallKey)  #Drill down into the Uninstall key using the OpenSubKey Method
+    $subkeys=$regkey.GetSubKeyNames()   #Retrieve an array of string that contain all the subkey names
+    foreach($key in $subkeys){  #Open each Subkey and use GetValue Method to return the required values for each
 
         $thisKey=$UninstallKey+"\\"+$key
         $thisSubKey=$reg.OpenSubKey($thisKey)
@@ -52,8 +42,6 @@ foreach($pc in $computers){
     }
 }
 $tmctversion = $array | Where-Object { $_.DisplayName } | select ComputerName, DisplayName, DisplayVersion, Publisher | where {$_.DisplayName -like "Apache*"} | ft -hidetableheaders
-
-echo $tmctversion
 
 <#TODO Design a subroutine to validate the values assigned to @tmctversion are acutally valid. The below routine only tests for the presence
   of a value, even if that value is random and unrelated. For instance, assigning a value of "FOO" will still result in the script outputting "BAR" and continuing, even though "FOO"
