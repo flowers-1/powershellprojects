@@ -6,7 +6,7 @@ The variable created needs to contain data in the format -
       1) Pick highest version of the JRE/JDK installed on the local machine, if multiple are installed. If only one version is installed, pick that one;
       2) "<drive_letter>:\(Path to JRE/JDK on disk)";
 
-Once that data is stored in the variable, that variable needs then to be piped to a command which sets the local machine environment variables and set the $jhome version as the ENV variable JRE_HOME or, if JDK is installed, JDK_HOME (or both as the need arises).
+Once that data is stored in the variable, that variable needs then to be piped to a command - SETX - which sets the local machine environment variables and set the $jhome version as the ENV variable JRE_HOME or, if JDK is installed, JDK_HOME (or both as the need arises).
 
 If Java is not found on the machine (it should be installed on approximately 95% of machines already), ask the user if they wish to download the installer manually (if selected open browser window to the JRE download page on Oracle) or automatically download and install the installer package. Once that is done, perform the same steps as above to set the environment variables.
 
@@ -20,7 +20,7 @@ Once Tomcat is downloaded, it needs to be unpacked and copied to a location spec
 
 GET_SOFTWARE FUNCTION LIBRARY -
 
-The function has been designed and works. Next step to take the output of the function and apply filters to it so that all unnecessary software is ignored and only the software required for the installation of IL10 is installed and configured properly. This can either be done in the same library or a new library can be created and called as necessary. For now, a separate library will be created for ease of testing, which once validated it works, the library will be merged into an existing function.
+The function has been designed and works. Next step to take the output of the function and apply filters to it so that all unnecessary software is ignored and only the software required for the installation of IL10 is installed and configured properly. This can either be done in the same library or a new library can be created and called as necessary. For now, a separate library will be created for ease of testing, which once validated it works, the library will be merged into an existing library.
 
 
 DOWNLOAD_REQUIREMENTS LIBRARY -
