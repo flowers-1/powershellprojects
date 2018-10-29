@@ -5,7 +5,7 @@ function Get-Software {
   [OutputType('System.Software.Inventory')]
   [Cmdletbinding()]
   Param(
-    [Parameter(VauleFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+    [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
     [String[]]$computername=$env:ComputerName
   )
   Begin {
