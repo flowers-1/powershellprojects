@@ -1,4 +1,18 @@
-
+<# This script creates the function "Get-Software". This function does five things:
+  1. Queries local machine for all installed programs using the 'Get-Value' method, looking for the following:
+    a) DisplayName ($DisplayName)
+    b) Version ($DisplayVersion)
+    c) InstallDate ($InstallDate)
+    d) Publisher ($Publisher)
+    e) Uninstall Path ($UninstallString)
+  2. Using the method 'OpenSubKey', read each of the registry keys located at "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" &
+  "HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" and return the values for each into an empty array.
+  3. Check for objects with empty displayname and prevents them from being populated.
+  4. Filters out any Windows patches in the output using a RegEx to prevent population.
+  5. Using "TRIM" and "TRIMEND", cleanup the output from the registry to prevent garbage output.
+The function 'Get-Software' can be piped to other functions to either format the output for human readability or perform other functions on the dataset.
+If this function is pathed in other scripts using dot-library [. <Drive-Letter>\(Path)] the function can be called as a standalone subroutine.
+#>
 
 
 function Get-Software {
@@ -44,7 +58,7 @@ function Get-Software {
                     }
                   }
                   $Publisher = try {  #Create New Object with empty Properties
-                    $thisSubKey.GetVaule('Publisher').Trim()
+                    $thisSubKey.GetValue('Publisher').Trim()
                   }
                   Catch{
                     $thisSubKey.GetValue('Publisher')

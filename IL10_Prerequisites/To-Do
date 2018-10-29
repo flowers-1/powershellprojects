@@ -1,0 +1,16 @@
+ENVIRONMENT VARIABLE SCRIPT TODO -
+
+Subroutine for software inventory has been created. Next step is to design a filter or another function to filter out all but the required software needed for the script to function as intended. Possibly this subroutine should be another function that can be called to cleanup the output of the Get-Software function once the data has been output to a variable.
+
+The variable created needs to contain data in the format -
+      1) Pick highest version of Java installed on the local machine, if multiple are installed. If only one version is installed, pick that one;
+      2) "<drive_letter>:\(Path to JRE/JDK on disk)";
+
+Once that data is stored in the variable, that variable needs then to be piped to a command which sets the local machine environment variables and set the $jhome version as the ENV variable JRE_HOME or, if JDK is installed, JDK_HOME (or both as the need arises).
+
+If Java is not found on the machine (it should be installed on approximately 95% of machines), download the installer package and run it with the parameter "-quiet" and "-RunAsAdministrator". Once that is done, perform the same steps as above to set the environment variables.
+
+
+TOMCAT CONFIGURATION SCRIPT TODO -
+
+Design a filter that takes the output from the function 'Get-Software' and checks for the the presence of the Apache Tomcat Platform on the local machine. If the software is not present on the local machine (indicating a new install of IL and/or Rapport), download the software package from Apache and unpack it to a location specified by the user. Once unpacked perform the same steps as if the software was already installed.
