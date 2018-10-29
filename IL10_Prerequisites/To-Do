@@ -1,18 +1,30 @@
-ENVIRONMENT VARIABLE SCRIPT TODO -
+ENVIRONMENT VARIABLE SCRIPT -
 
-Subroutine for software inventory has been created. Next step is to design a filter or another function to filter out all but the required software needed for the script to function as intended. Possibly this subroutine should be another function that can be called to cleanup the output of the Get-Software function once the data has been output to a variable.
+Subroutine for the software inventory process has been created. Next step is to design a filter or another function to filter out all but the required software needed for the script to function as intended. Possibly this subroutine should be another function that can be called to cleanup the output of the Get-Software function once the data has been output to a variable.
 
 The variable created needs to contain data in the format -
-      1) Pick highest version of Java installed on the local machine, if multiple are installed. If only one version is installed, pick that one;
+      1) Pick highest version of the JRE/JDK installed on the local machine, if multiple are installed. If only one version is installed, pick that one;
       2) "<drive_letter>:\(Path to JRE/JDK on disk)";
 
 Once that data is stored in the variable, that variable needs then to be piped to a command which sets the local machine environment variables and set the $jhome version as the ENV variable JRE_HOME or, if JDK is installed, JDK_HOME (or both as the need arises).
 
-If Java is not found on the machine (it should be installed on approximately 95% of machines), download the installer package and run it with the parameter "-Quiet" and "-RunAsAdministrator". Once that is done, perform the same steps as above to set the environment variables.
+If Java is not found on the machine (it should be installed on approximately 95% of machines already), ask the user if they wish to download the installer manually (if selected open browser window to the JRE download page on Oracle) or automatically download and install the installer package. Once that is done, perform the same steps as above to set the environment variables.
 
 
-TOMCAT CONFIGURATION SCRIPT TODO -
+TOMCAT CONFIGURATION SCRIPT -
 
 Design a filter that takes the output from the function 'Get-Software' and checks for the the presence of the Apache Tomcat Platform on the local machine. If the software is not present on the local machine (indicating a new install of IL and/or Rapport), download the software package from Apache and unpack it to a location specified by the user. Once unpacked perform the same steps as if the software was already installed.
 
 Once Tomcat is downloaded, it needs to be unpacked and copied to a location specified by the user. Once that is specified, then configuration can be completed as outlined in the IL10 Installation Guide for the App Server.
+
+
+GET_SOFTWARE FUNCTION LIBRARY -
+
+The function has been designed and works. Next step to take the output of the function and apply filters to it so that all unnecessary software is ignored and only the software required for the installation of IL10 is installed and configured properly. This can either be done in the same library or a new library can be created and called as necessary. For now, a separate library will be created for ease of testing, which once validated it works, the library will be merged into an existing function.
+
+
+DOWNLOAD_REQUIREMENTS LIBRARY -
+
+This function needs to be created. This function will have two separate parts that are able to be called independently of each other. The first function - GET-JAVARE86 - will download the x86 Runtime Environment from Oracle and then quietly install the program on the user's computer. If the user is running a 64-bit OS, the function GET-JAVARE64 will download and x64 Runtime Environment from Oracle and then quietly install the program on the user's computer.
+
+The second part of this library will download the Apache Tomcat platform from Apache. There will be two separate functions - GET-TOMCAT64 and GET-TOMCAT86. GET_TOMCAT64 will download the Tomcat 64-bit ZIP bundle and extract the ZIP to a location specified by the user. GET-TOMCAT86 will download the Tomcat 32-bit ZIP bundle and extract the ZIP to a location specified by the user. The version and flavor of the Tomcat download will depend on the output of a function to detect the architecture of the system (32 or 64-bit).

@@ -1,3 +1,5 @@
+#loads the script Get-Software into the library for access in other scripts.DESCRIPTION
+. D:\Users\Paul20\github\powershellprojects\Libraries\Get-Software.ps1
 <#Check for Admin rights on the current run. This could also be accomplished via #requires -RunAsAdministrator. However, this could be more robust. #>
 <#
         .SYNOPSIS
@@ -17,9 +19,6 @@ function Test-IsAdmin {
         throw "Failed to determine if the current user has elevated privileges. The error was: '{0}'." -f $_
     }
 }
-
-#loads the script Get-Software into the library for access in other scripts.DESCRIPTION
-. D:\Users\Paul20\github\powershellprojects\Libraries\Get-Software.ps1
 
 <# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
    results to a formatted table assigned to variable. Assign variable @jversion to @array and grep the values in the table, searching for anything relating
