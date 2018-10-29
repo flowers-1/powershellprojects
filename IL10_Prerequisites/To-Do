@@ -8,9 +8,11 @@ The variable created needs to contain data in the format -
 
 Once that data is stored in the variable, that variable needs then to be piped to a command which sets the local machine environment variables and set the $jhome version as the ENV variable JRE_HOME or, if JDK is installed, JDK_HOME (or both as the need arises).
 
-If Java is not found on the machine (it should be installed on approximately 95% of machines), download the installer package and run it with the parameter "-quiet" and "-RunAsAdministrator". Once that is done, perform the same steps as above to set the environment variables.
+If Java is not found on the machine (it should be installed on approximately 95% of machines), download the installer package and run it with the parameter "-Quiet" and "-RunAsAdministrator". Once that is done, perform the same steps as above to set the environment variables.
 
 
 TOMCAT CONFIGURATION SCRIPT TODO -
 
 Design a filter that takes the output from the function 'Get-Software' and checks for the the presence of the Apache Tomcat Platform on the local machine. If the software is not present on the local machine (indicating a new install of IL and/or Rapport), download the software package from Apache and unpack it to a location specified by the user. Once unpacked perform the same steps as if the software was already installed.
+
+Once Tomcat is downloaded, it needs to be unpacked and copied to a location specified by the user. Once that is specified, then configuration can be completed as outlined in the IL10 Installation Guide for the App Server.

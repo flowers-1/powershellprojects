@@ -6,7 +6,7 @@ things:
     4. Configure the program as laid out in the install guide, asking for user input when necessary.DESCRIPTION
 #>
 #loads the script Get-Software into the library for access in other scripts.DESCRIPTION
-. D:\Users\Paul20\github\powershellprojects\Get-Software.ps1
+. D:\Users\Paul20\github\powershellprojects\Libraries\Get-Software.ps1
 #Checks for Administrative rights on the current running installer session.
 function Test-IsAdmin {
     try {
