@@ -10,6 +10,7 @@
   3. Check for objects with empty displayname and prevents them from being populated.
   4. Filters out any Windows patches in the output using a RegEx to prevent population.
   5. Using "TRIM" and "TRIMEND", cleanup the output from the registry to prevent garbage output.
+  
 The function 'Get-Software' can be piped to other functions to either format the output for human readability or perform other functions on the dataset.
 If this function is pathed in other scripts using dot-library [. <Drive-Letter>\(Path)] the function can be called as a standalone subroutine.
 #>
@@ -46,7 +47,7 @@ function Get-Software {
               try {   #Prevents objects with empty DisplayName
                 $thisSubKey=$reg.OpenSubKey($thisKey)
                 $DisplayName = $thisSubKey.getValue("DisplayName")
-                if($DisplayName -AND $DisplayName -NotMatch '^Update for|rollup|^Security Update|^Service Pack|^Hotfix'){
+                if($DisplayName -AND $DisplayName -NotMatch '^Update for|rollup|^Security Update|^Service Pack|^Hotfix|^Microsoft Visual|^Microsoft'){
                   $Date = $thisSubKey.GetValue('InstallDate')
                   if($Date){
                     try{
