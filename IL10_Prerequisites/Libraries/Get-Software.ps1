@@ -9,8 +9,8 @@
   "HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" and return the values for each into an empty array.
   3. Check for objects with empty displayname and prevents them from being populated.
   4. Filters out any Windows patches in the output using a RegEx to prevent population.
-  5. Using "TRIM" and "TRIMEND", cleanup the output from the registry to prevent garbage output.
-  
+  5. Using "TRIM" and "TRIMEND", cleanup the output from the registry to prevent garbage output and unnecessary characters.
+
 The function 'Get-Software' can be piped to other functions to either format the output for human readability or perform other functions on the dataset.
 If this function is pathed in other scripts using dot-library [. <Drive-Letter>\(Path)] the function can be called as a standalone subroutine.
 #>
