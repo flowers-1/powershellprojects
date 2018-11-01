@@ -53,7 +53,7 @@ function Get-JavaRE {
       }
     Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x86 Offline Installer>" -Destination $filepath
   }
-    [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath)
+    [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath,"Download Successul")
 }
 
 function Extract-Tomcat {
