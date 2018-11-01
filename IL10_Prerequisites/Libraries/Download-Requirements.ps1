@@ -14,7 +14,7 @@ function Get-Tomcat {
     $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath
+      New-Item -ItemType directory -Path $filepath > $null
       }
     Start-BitsTransfer -Source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x64.zip" -Destination $filepath
     }
@@ -25,7 +25,7 @@ else {
     $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath
+      New-Item -ItemType directory -Path $filepath > $null
       }
     Start-BitsTransfer -source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x86.zip" -Destination $filepath
     }
@@ -39,7 +39,7 @@ function Get-JavaRE {
     $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath
+      New-Item -ItemType directory -Path $filepath > $null
       }
     Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x64 Offline Installer>" -Destination $filepath
   }
@@ -49,7 +49,7 @@ function Get-JavaRE {
     $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath
+      New-Item -ItemType directory -Path $filepath > $null
       }
     Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x86 Offline Installer>" -Destination $filepath
   }
