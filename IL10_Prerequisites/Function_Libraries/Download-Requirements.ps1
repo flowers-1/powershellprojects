@@ -6,6 +6,7 @@ Both of the above functions, once created and pathed in the other scripts, will 
 The method of downloading the installer files is Background Intelligent Transfer Service (BITS). Using Bits removes the need to call explicit file paths on the destination and will instead automatically download the file and save it using the name in the URL.
 #>
 
+#Downloads either the 32 or 64-bit Apache Tomcat program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location.
 function Get-Tomcat {
   #64 bit logic here
     if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
@@ -31,7 +32,7 @@ else {
     }
     [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Success")
 }
-
+#Downloads either the 32 or 64-bit Oracle Java program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location.
 function Get-JavaRE {
   if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
     #64 bit logic here
@@ -56,7 +57,6 @@ function Get-JavaRE {
     [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath,"Download Successul")
 }
 
+#Extracts the downloaded Apache Tomcat program to a user specified location.
 function Extract-Tomcat {
-
-
 }
