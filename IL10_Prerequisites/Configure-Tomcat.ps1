@@ -3,10 +3,10 @@ things:
     1. Checks for Administrative rights on the current run;
     2. Gets a list of the installed programs on the machine and searches the output for installed versions of the Apache Tomcat platform;
     3. If Apache Tomcat is NOT present, download it to directory where installer is running from;
-    4. Configure the program as laid out in the install guide, asking for user input when necessary.DESCRIPTION
+    4. Configure the program as laid out in the install guide, asking for user input when necessary.
 #>
-#loads the script Get-Software into the library for access in other scripts.DESCRIPTION
-. D:\Users\Paul20\github\powershellprojects\Libraries\Get-Software.ps1
+#loads the script Get-Software into the library for access in other scripts.
+. D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Libraries\Download_Requirements.ps1
 #Checks for Administrative rights on the current running installer session.
 function Test-IsAdmin {
     try {
@@ -23,7 +23,7 @@ function Test-IsAdmin {
    to the Apache Tomcat Platform and store in variable @tmctversion. Note: There may be a way to simplify this subroutine.
 #>
 
-$jhome = Get-Software | sls -Pattern "Java*" | ft -AutoSize
+$jhome = Get-Software | sls -Pattern "Apache*" | ft -AutoSize
 
 <#TODO Design a subroutine to validate the values assigned to @tmctversion are acutally valid. The below routine only tests for the presence
   of a value, even if that value is random and unrelated. For instance, assigning a value of "FOO" will still result in the script outputting "BAR" and continuing, even though "FOO"

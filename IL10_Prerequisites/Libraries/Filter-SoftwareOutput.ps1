@@ -34,7 +34,7 @@ function Get-Software {
               try {   #Prevents objects with empty DisplayName
                 $thisSubKey=$reg.OpenSubKey($thisKey)
                 $DisplayName = $thisSubKey.getValue("DisplayName")
-                if($DisplayName -AND $DisplayName -NotMatch '^Update for|rollup|^Security Update|^Service Pack|^Hotfix|^Microsoft Visual|^Microsoft'){
+                if($DisplayName -AND $DisplayName -NotMatch '^Update for|rollup|^Security Update|^Service Pack|^Hotfix|^Microsoft Visual|^Microsoft|^SQL'){
                   $Date = $thisSubKey.GetValue('InstallDate')
                   if($Date){
                     try{
