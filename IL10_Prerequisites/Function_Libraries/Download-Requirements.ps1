@@ -30,7 +30,7 @@ else {
       }
     Start-BitsTransfer -source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x86.zip" -Destination $filepath
     }
-    [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Successful")
+    [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Success")
 }
 #Downloads either the 32 or 64-bit Oracle Java program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location.
 function Get-JavaRE {
