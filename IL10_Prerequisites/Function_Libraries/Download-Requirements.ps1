@@ -11,7 +11,7 @@ function Get-Tomcat {
   #64 bit logic here
     if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
     #Ask for user input in a GUI dialog box
-   [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
     $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
