@@ -1,5 +1,5 @@
 #loads the script Get-Software into the library for access in other scripts.DESCRIPTION
-. D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Libraries\Get-Software.ps1
+. D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Get-Software.ps1
 <#Check for Admin rights on the current run. This could also be accomplished via #requires -RunAsAdministrator. However, this could be more robust. #>
 <#
         .SYNOPSIS
