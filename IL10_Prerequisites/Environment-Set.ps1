@@ -1,5 +1,6 @@
 #loads the script Get-Software into the library for access in other scripts.DESCRIPTION
 . D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Get-Software.ps1
+. D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Test-IsAdmin.ps1
 <#Check for Admin rights on the current run. This could also be accomplished via #requires -RunAsAdministrator. However, this could be more robust. #>
 <#
         .SYNOPSIS
@@ -20,7 +21,7 @@ function Test-IsAdmin {
     }
 }
 
-<# Invoke the function Get-Software. Assign the output of Get-Software to variable $LMSoftwareInventory.
+<# Invoke the Get-Software function and assign the output to variable $LMSoftwareInventory.
 #>
 
 $LMSoftwareInventory = Get-Software | ft -Property DisplayName,InstallLocation | Out-String
