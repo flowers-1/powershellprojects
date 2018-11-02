@@ -6,6 +6,7 @@ things:
     4. Configure the program as laid out in the install guide, asking for user input when necessary.
 #>
 #loads the script Get-Software into the library for access in other scripts.
+. D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Test-IsAdmin.ps1
 . D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Download-Requirements.ps1
 #Checks for Administrative rights on the current running installer session.
 function Test-IsAdmin {
