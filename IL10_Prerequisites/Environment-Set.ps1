@@ -11,7 +11,7 @@
             System.Boolean
                 True if the current Powershell is elevated, false if not.
     #>
-
+Test-IsAdmin
 
 <# Invoke the Get-Software function and assign the output to variable $LMSoftwareInventory.
 #>
