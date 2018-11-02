@@ -11,15 +11,7 @@
             System.Boolean
                 True if the current Powershell is elevated, false if not.
     #>
-function Test-IsAdmin {
-    try {
-        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-        $principal = New-Object Security.Principal.WindowsPrincipal -ArgumentList $identity
-        return $principal.IsInRole( [Security.Principal.WindowsBuiltInRole]::Administrator )
-    } catch {
-        throw "Failed to determine if the current user has elevated privileges. The error was: '{0}'." -f $_
-    }
-}
+
 
 <# Invoke the Get-Software function and assign the output to variable $LMSoftwareInventory.
 #>
