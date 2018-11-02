@@ -1,6 +1,13 @@
-<# This function tests the current PS environment to make sure that it is running as administrator. If it is not, error out
-#>
-
+<#Check for Admin rights on the current run. However, this is more robust #>
+<#
+        .SYNOPSIS
+            Checks if the current Powershell instance is running with elevated privileges or not.
+        .EXAMPLE
+            PS C:\> Test-IsAdmin
+        .OUTPUTS
+            System.Boolean
+                True if the current Powershell is elevated, false if not.
+    #>
 function Test-IsAdmin {
     try {
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
