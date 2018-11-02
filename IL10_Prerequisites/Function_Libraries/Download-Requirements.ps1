@@ -32,6 +32,11 @@ else {
     }
     [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Success")
 }
+
+#Extracts the downloaded Apache Tomcat program to a user specified location. TODO Code both 32 and 64-bit logic for extraction.
+function Extract-Tomcat {
+}
+
 #Downloads either the 32 or 64-bit Oracle Java program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location.
 function Get-JavaRE {
   if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
@@ -55,8 +60,4 @@ function Get-JavaRE {
     Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x86 Offline Installer>" -Destination $filepath
   }
     [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath,"Download Successful")
-}
-
-#Extracts the downloaded Apache Tomcat program to a user specified location.
-function Extract-Tomcat {
 }
