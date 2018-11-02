@@ -1,0 +1,42 @@
+Introduction
+  There are four external functions which are located in the "Function_Libraries" folder. These functions are as follows:
+    1. Download-Requirements
+    2. Filter-SoftwareOutput
+    3. Get-Software
+    4. Test-IsAdmin
+  These functions have been separated out in order to make the main code more readable and clean. Below are the descriptions of each library and their subroutines.
+
+Library: Download-Requirements
+  This library is made up of four functions:
+    1. Get-Tomcat
+    2. Extract-Tomcat
+    3. Get-JavaRE
+    4. Install-JavaRE
+  The first function, Get-Tomcat, uses the API call GetWindowsManagementInstrumentation (GWMI) to query the OS for its bittiness. Depending on the result of the GWMI call, the function then invokes the subsystem, Microsoft.VisualBasic, to display a window to the user to collect the location where the Apache Tomcat ZIP file should be downloaded to. Once the user inputs the file path (in format "<drive_letter>:\<Path>"), a test is then performed on the input to determine if the path entered exists. This is done through the use of the command 'Test-Path'. If the path does not exist, the command 'New-Item' is invoked to create the directory structure. Once the directory structure is created, the current session will invoke a Background Intelligent Transfer Service (BITS) session to the official Tomcat mirror and download the ZIP file for either the 32 or 64-bit Tomcat - depending on the result of the GWMI API result. Currently this is download session is hard-coded to a specific URI. In the future, this should be a relative path so that the Tomcat version downloaded is determined by the version of IL installed.
+
+  The second function, Extract-Tomcat, is fairly self-explanatory. This function will extract the ZIP file to a user-specified location. This is accomplished using the 'Extract-Archive' (or Expand-Archive) function. In order to gather the users' desired extraction location, a VBasic routine (Microsoft.VisualBasic) will display a window to the user to collect the location where the Tomcat platform should be extracted. The window will only accept a file path in the format "<drive_letter>:\<path>". Once this information is collected, a test will be performed on the input to determine if the path entered exists (Test-Path). If the path does not exist, the command will create the directory structure for it.
+
+  The third function, Get-JavaRE, uses the API call GetWindowsManagementInstrumentation (GWMI) to query the OS for its bittiness. Depending on the result of the GWMI call, the function then invokes the partial subsystem, Microsoft.VisualBasic, to display a window to the user to collect the location where the Java Runtime Environment will be downloaded to. Once the user inputs the file path (in format "<drive_letter>:\<Path>"), a test is then performed on the input to determine if the path entered exists. This is done through the use of the command 'Test-Path'. If the path does not exist, the command 'New-Item' is invoked to create the directory structure. Once the directory structure is created, the current session will invoke a Background Intelligent Transfer Service (BITS) session to an official Oracle mirror and download the requested Java version, based on the GWMI result, to the user-entered path. Currently this download session is hard-coded to a specific URI. This should be changed in future releases so that it is based on a relative path.
+
+  The fourth function, Install-JavaRE, uses the standard windows installer method to install the Oracle Java Platform quietly. Once installed, alert the user that the install is complete and continue on in the pre-requisite configuration process.
+
+
+Library: Test-IsAdmin
+    This function is simple, it checks the current running PowerShell session for Administrative privileges. If it is running as admin, continue. If it is not, display error to end user asking them to run the session again as admin.
+
+
+Library: Get-Software
+  This function creates the Get-Software routine. It does five things:
+    1. Queries local machine for all installed programs using the 'Get-Value' method, looking for the following:
+        a) DisplayName ($DisplayName)
+        b) Version ($DisplayVersion)
+        c) InstallDate ($InstallDate)
+        d) Publisher ($Publisher)
+        e) Uninstall Path ($UninstallString)
+    2. Using the method 'OpenSubKey', read each of the registry keys located at "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" &
+  "HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" and return the values for each into an empty array.
+    3. Check for objects with empty displayname and prevents them from being populated.
+    4. Filters out any Windows patches and other non-essential items using a RegEx to prevent population.
+    5. Using "TRIM" and "TRIMEND", cleanup the output from the registry to prevent garbage output and unnecessary characters.
+
+  It should be noted, this function could be done with a WMI call, however, the difference in runtime is unacceptable. Using a WMI call to win32 to enumerate the list of installed software takes, on average, 32577ms (based on debug timing). Using the above function takes approximately 6ms to enumerate - a 199.93% decrease in runtime. This is advantageous as the enumeration process will be practically invisible to the end-user.
