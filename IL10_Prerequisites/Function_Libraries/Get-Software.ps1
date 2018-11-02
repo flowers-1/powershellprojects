@@ -12,7 +12,7 @@
   5. Using "TRIM" and "TRIMEND", cleanup the output from the registry to prevent garbage output and unnecessary characters.
 
 The function 'Get-Software' can be piped to other functions to either format the output for human readability or perform other functions on the dataset.
-If this function is pathed in other scripts using dot-library [. <Drive-Letter>\(Path)] the function can be called as a standalone subroutine.
+If this function is pathed in other scripts using dot-library [. <Drive-Letter>:\(Path)] the function can be called as a standalone subroutine.
 #>
 
 
