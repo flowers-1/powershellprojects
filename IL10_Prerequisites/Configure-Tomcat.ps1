@@ -24,9 +24,5 @@ function Test-IsAdmin {
    to the Apache Tomcat Platform and store in variable @tmctversion. Note: There may be a way to simplify this subroutine.
 #>
 
-$jhome = Get-Software | sls -Pattern "Apache*" | ft -AutoSize
-
-<#TODO Design a subroutine to validate the values assigned to @tmctversion are acutally valid. The below routine only tests for the presence
-  of a value, even if that value is random and unrelated. For instance, assigning a value of "FOO" will still result in the script outputting "BAR" and continuing, even though "FOO"
-  is not a valid value for the Tomcat software.
-#>
+$jhome = Get-Software
+$tmctversion = Get-Software
