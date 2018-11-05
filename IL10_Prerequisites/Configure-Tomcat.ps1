@@ -9,15 +9,8 @@ things:
 . D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Test-IsAdmin.ps1
 . D:\Users\Paul20\github\powershellprojects\IL10_Prerequisites\Function_Libraries\Download-Requirements.ps1
 #Checks for Administrative rights on the current running installer session.
-function Test-IsAdmin {
-    try {
-        $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-        $principal = New-Object Security.Principal.WindowsPrincipal -ArgumentList $identity
-        return $principal.IsInRole( [Security.Principal.WindowsBuiltInRole]::Administrator )
-    } catch {
-        throw "Failed to determine if the current user has elevated privileges. The error was: '{0}'." -f $_
-    }
-}
+
+Test-IsAdmin
 
 <# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
    results to a formatted table assigned to variable. Assign variable @tmctversion to @array and grep the values in the table, searching for anything relating
