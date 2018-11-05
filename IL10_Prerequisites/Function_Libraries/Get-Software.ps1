@@ -28,99 +28,94 @@ function Get-Software {
   Process{
     foreach($Computer in $ComputerName){
       if(Test-Connection -ComputerName $Computer -Count 1 -Quiet){
-        $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall","SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")
+        $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall","SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
         foreach ($Path in $Paths){
-          Write-Verbose "Checking Path: $Path"
+          Write-Verbose "Checking Path: $Path";
           try {   #Create an instance of the Registry Object and open the HKLM base key
-            $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64')
+            $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64');
           }
           Catch {
-            Write-error $_
-            Continue
+            Write-error $_;
+            Continue;
           }
           try {   #Drill down into the Uninstall key using the OpenSubKey method
-            $regkey=$reg.OpenSubKey($Path)
-            $subkeys=$regkey.GetSubKeyNames()   #Retrieve an array of string that contains all the subkey names
+            $regkey=$reg.OpenSubKey($Path);
+            $subkeys=$regkey.GetSubKeyNames();   #Retrieve an array of string that contains all the subkey names
             foreach($key in $subkeys){  #Open each Subkey and use the GetValue method to return the required values for each.
-              Write-Verbose "Key: $key"
-              $thiskey = $Path + "\\" + $key
+              Write-Verbose "Key: $key";
+              $thiskey = $Path + "\\" + $key;
               try {   #Prevents objects with empty DisplayName
-                $thisSubKey=$reg.OpenSubKey($thisKey)
-                $DisplayName = $thisSubKey.getValue("DisplayName")
-                if($DisplayName -AND $DisplayName -NotMatch '^Update for|rollup|^Security Update|^Service Pack|^Hotfix|^Microsoft Visual|^Microsoft|^SQL'){
-                  $Date = $thisSubKey.GetValue('InstallDate')
+                $thisSubKey=$reg.OpenSubKey($thisKey);
+                $DisplayName = $thisSubKey.getValue("DisplayName");
+                if($DisplayName -AND $DisplayName -Match 'Java *|Apache Tomcat'){
+                  $Date = $thisSubKey.GetValue('InstallDate');
                   if($Date){
                     try{
-                      $Date = [datetime]::ParseExact($Date, 'yyyyMMdd', $Null)
+                      $Date = [datetime]::ParseExact($Date, 'yyyyMMdd', $Null);
                     }
                     catch{
-                      Write-Warning "$($Computer): $_ <$($Date)>"
-                      $Date = $Null
+                      Write-Warning "$($Computer): $_ <$($Date)>";
+                      $Date = $Null;
                     }
                   }
                   $Publisher = try {  #Create New Object with empty Properties
-                    $thisSubKey.GetValue('Publisher').Trim()
+                    $thisSubKey.GetValue('Publisher').Trim();
                   }
                   Catch{
-                    $thisSubKey.GetValue('Publisher')
+                    $thisSubKey.GetValue('Publisher');
                   }
                   $version = try {  #Resolves some strangeness with trailing [char]0 on some strings
-                    $thisSubKey.GetValue('DisplayVersion').TrimEnd(([char[]](32,0)))
+                    $thisSubKey.GetValue('DisplayVersion').TrimEnd(([char[]](32,0)));
                   }
                   Catch {
-                    $thisSubKey.GetValue('DisplayVersion')
+                    $thisSubKey.GetValue('DisplayVersion');
                   }
                   $UninstallString = try {
-                    $thisSubKey.GetValue('UninstallString').Trim()
+                    $thisSubKey.GetValue('UninstallString').Trim();
                   }
                   Catch{
-                  $thisSubKey.GetValue('UninstallString')
+                  $thisSubKey.GetValue('UninstallString');
                   }
                   $InstallLocation = try {
-                    $thisSubKey.GetValue('InstallLocation').Trim()
+                    $thisSubKey.GetValue('InstallLocation').Trim();
                   }
                   Catch {
-                    $thisSubKey.GetValue('InstallLocation')
+                    $thisSubKey.GetValue('InstallLocation');
                   }
                   $InstallSource = try {
-                    $thisSubKey.GetValue('InstallSource').Trim()
+                    $thisSubKey.GetValue('InstallSource').Trim();
                   }
                   Catch {
-                    $thisSubKey.GetValue('InstallSource')
+                    $thisSubKey.GetValue('InstallSource');
                   }
                   $HelpLink = Try {
-                     $thisSubKey.GetValue('HelpLink').Trim()
+                     $thisSubKey.GetValue('HelpLink').Trim();
                   }
                   Catch {
-                    $thisSubKey.GetValue('HelpLink')
+                    $thisSubKey.GetValue('HelpLink');
                   }
                   $Object = [pscustomobject] @{
-                    Computername = $Computer
-                    DisplayName = $DisplayName
-                    Version = $Version
-                    InstallDate = $Date
-                    Publisher = $Publisher
-                    UninstallString = $UninstallString
-                    InstallLocation = $InstallLocation
-                    InstallSource = $InstallSource
-                    HelpLink = $thisSubKey.GetValue('HelpLink')
-                    EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize')*1024)/1MB,2))
+                    DisplayName = $DisplayName;
+                    UninstallString = $UninstallString;
+                    InstallLocation = $InstallLocation;
+                    #HelpLink = $thisSubKey.GetValue('HelpLink');
+                    #EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize')*1024)/1MB,2));
                   }
-                  $Object.pstypenames.insert(0, 'System.Software.Inventory')
-                  Write-Output $Object
+                  $Object.pstypenames.insert(0, 'System.Software.Inventory');
+                  Write-Output $Object;
                 }
               }
               Catch {
-                Write-Warning "$Key : $_"
+                Write-Warning "$Key : $_";
               }
             }
           }
           Catch {}
-          $reg.Close()
+          $reg.Close();
         }
       }
       Else {
-        Write-Error "$($Computer): Unable to reach remote system."
+        Write-Error "$($Computer): Unable to reach remote system.";
       }
     }
   }
