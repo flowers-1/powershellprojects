@@ -11,53 +11,60 @@ function Get-Tomcat {
   #64 bit logic here
     if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
     #Ask for user input in a GUI dialog box
-    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As");
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath > $null
+      New-Item -ItemType directory -Path $filepath > $null;
       }
-    Start-BitsTransfer -Source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x64.zip" -Destination $filepath
+    Start-BitsTransfer -Source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x64.zip" -Destination $filepath;
     }
   #32 bit logic here
 else {
     #Ask for user input in a GUI dialog box
-    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As");
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath > $null
+      New-Item -ItemType directory -Path $filepath > $null;
       }
-    Start-BitsTransfer -source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x86.zip" -Destination $filepath
+    Start-BitsTransfer -source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x86.zip" -Destination $filepath;
     }
-    [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Success")
+    [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Success");
 }
 
 #Extracts the downloaded Apache Tomcat program to a user specified location. TODO Code both 32 and 64-bit logic for extraction.
 function Extract-Tomcat {
+  #Windows Server 2012 and higher logic here
+
+  #Windows Server 2012 and lower here logic here
 }
 
 #Downloads either the 32 or 64-bit Oracle Java program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location.
 function Get-JavaRE {
   if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
     #64 bit logic here
-    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath > $null
+      New-Item -ItemType directory -Path $filepath > $null;
       }
-    Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x64 Offline Installer>" -Destination $filepath
+    Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x64 Offline Installer>" -Destination $filepath;
   }
   else {
     #32 bit logic here
-    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null
-    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save Tomcat to", "Save As")
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
     #Test entered path for existence. If it does not exist, create the directory structure
     if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath > $null
+      New-Item -ItemType directory -Path $filepath > $null;
       }
-    Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x86 Offline Installer>" -Destination $filepath
+    Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x86 Offline Installer>" -Destination $filepath;
   }
-    [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath,"Download Successful")
+    [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath,"Download Successful");
+}
+
+function Install-JavaRE {
+  #Windows installation logic here.
 }
