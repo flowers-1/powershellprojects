@@ -16,7 +16,7 @@ If this function is pathed in other scripts using dot-library [. <Drive-Letter>:
 #>
 
 
-function Get-JavaInstall {
+function Get-InstalledJava {
   [OutputType('System.Software.Inventory')]
   [Cmdletbinding()]
   Param(
@@ -120,7 +120,7 @@ function Get-JavaInstall {
     }
   }
 }
-function Get-TomcatInstall {
+function Get-InstalledTomcat {
   [OutputType('System.Software.Inventory')]
   [Cmdletbinding()]
   Param(
