@@ -14,8 +14,7 @@ things:
 Test-IsAdmin
 
 <# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
-   results to a formatted table assigned to variable. Assign variable @tmctversion to @array and grep the values in the table, searching for anything relating
-   to the Apache Tomcat Platform and store in variable @tmctversion. Note: There may be a way to simplify this subroutine.
+   results to a formatted table assigned to variable. 
 #>
 
 $jhome = Get-Software
