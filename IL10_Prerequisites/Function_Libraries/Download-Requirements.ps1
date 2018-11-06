@@ -44,6 +44,7 @@ else{ #Windows Server 2012 and lower here logic here
 }
 
 function Install-JavaRE {
+  if((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
   #Read working directory paths by using the user supplied path stored in @filepath
     [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
     $workd = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
@@ -60,7 +61,7 @@ function Install-JavaRE {
     $text | Set-Content "$workd\jreinstall.cfg"
 
     #download executable, this is the small online installer
-    $source = "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=230511_2f38c3b165be4555a1fa6e98c45e0808"
+    $source = "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=235724_2787e4a523244c269598db4e85c51e0c"
     $destination = "$workd\jreInstall.exe"
     $client = New-Object System.Net.WebClient
     $client.DownloadFile($source, $destination)
@@ -82,3 +83,42 @@ function Install-JavaRE {
     rm -Force $workd\jre*.exe
     rm -Force $workd\jre*.cfg
   }
+  else{
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+    $workd = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
+    if(-Not(Test-Path -Path $workd)){
+      New-Item -ItemType directory -Path $workd > $null;
+      }
+    #create configuration file for silent InstallLocation
+    $text = '
+    INSTALL_SILENT = Enable
+    AUTO_UPDATE = Enable
+    SPONSORS = Disable
+    REMOVEOUTOFDATEJRES = 1
+    '
+    $text | Set-Content "$workd\jreinstall.cfg"
+
+    #download executable, this is the small online installer
+    $source = "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=235724_2787e4a523244c269598db4e85c51e0c"
+    $destination = "$workd\jreInstall.exe"
+    $client = New-Object System.Net.WebClient
+    $client.DownloadFile($source, $destination)
+
+    #Install silently
+    Start-Process -FilePath "$workd\jreInstall.exe" -ArgumentList INSTALLCFG="$workd\jreInstall.cfg"
+
+    #Wait 180 seconds for the installation to finish
+    $doneDT = (Get-Date).AddSeconds($seconds)
+    while($doneDT -gt (Get-Date)) {
+        $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
+        $percent = ($seconds - $secondsLeft) / $seconds * 100
+        Write-Progress -Activity "Sleeping" -Status "Sleeping..." -SecondsRemaining $secondsLeft -PercentComplete $percent
+        [System.Threading.Thread]::Sleep(180)
+    }
+    Write-Progress -Activity "Installing the Java Runtime Environment" -Status "Installing, please standby..." -SecondsRemaining 0 -Completed
+
+    #Remove the installer file from working directory
+    rm -Force $workd\jre*.exe
+    rm -Force $workd\jre*.cfg
+  }
+}
