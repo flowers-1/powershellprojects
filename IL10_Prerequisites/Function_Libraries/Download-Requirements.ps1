@@ -35,36 +35,50 @@ else {
 
 #Extracts the downloaded Apache Tomcat program to a user specified location. TODO Code both 32 and 64-bit logic for extraction.
 function Extract-Tomcat {
-  #Windows Server 2012 and higher logic here
+  if { #Windows Server 2012 and higher logic here
 
-  #Windows Server 2012 and lower here logic here
-}
+  }
+else{ #Windows Server 2012 and lower here logic here
 
-#Downloads either the 32 or 64-bit Oracle Java program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location.
-function Get-JavaRE {
-  if ((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
-    #64 bit logic here
-    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
-    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
-    #Test entered path for existence. If it does not exist, create the directory structure
-    if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath > $null;
-      }
-    Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x64 Offline Installer>" -Destination $filepath;
   }
-  else {
-    #32 bit logic here
-    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
-    $filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
-    #Test entered path for existence. If it does not exist, create the directory structure
-    if(-Not(Test-Path -Path $filepath)){
-      New-Item -ItemType directory -Path $filepath > $null;
-      }
-    Start-BitsTransfer -Source "<Insert Direct Download Link for JavaRE x86 Offline Installer>" -Destination $filepath;
-  }
-    [System.Windows.MessageBox]::Show('Oracle Java Runtime Environment has been downloaded to ' + $filepath,"Download Successful");
 }
 
 function Install-JavaRE {
-  #Windows installation logic here.
-}
+  #Read working directory paths by using the user supplied path stored in @filepath
+    [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+    $workd = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
+    if(-Not(Test-Path -Path $workd)){
+      New-Item -ItemType directory -Path $workd > $null;
+      }
+    #create configuration file for silent InstallLocation
+    $text = '
+    INSTALL_SILENT = Enable
+    AUTO_UPDATE = Enable
+    SPONSORS = Disable
+    REMOVEOUTOFDATEJRES = 1
+    '
+    $text | Set-Content "$workd\jreinstall.cfg"
+
+    #download executable, this is the small online installer
+    $source = "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=230511_2f38c3b165be4555a1fa6e98c45e0808"
+    $destination = "$workd\jreInstall.exe"
+    $client = New-Object System.Net.WebClient
+    $client.DownloadFile($source, $destination)
+
+    #Install silently
+    Start-Process -FilePath "$workd\jreInstall.exe" -ArgumentList INSTALLCFG="$workd\jreInstall.cfg"
+
+    #Wait 180 seconds for the installation to finish
+    $doneDT = (Get-Date).AddSeconds($seconds)
+    while($doneDT -gt (Get-Date)) {
+        $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
+        $percent = ($seconds - $secondsLeft) / $seconds * 100
+        Write-Progress -Activity "Sleeping" -Status "Sleeping..." -SecondsRemaining $secondsLeft -PercentComplete $percent
+        [System.Threading.Thread]::Sleep(180)
+    }
+    Write-Progress -Activity "Installing the Java Runtime Environment" -Status "Installing, please standby..." -SecondsRemaining 0 -Completed
+
+    #Remove the installer file from working directory
+    rm -Force $workd\jre*.exe
+    rm -Force $workd\jre*.cfg
+  }
