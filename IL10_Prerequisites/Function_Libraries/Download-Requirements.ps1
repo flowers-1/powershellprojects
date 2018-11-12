@@ -35,14 +35,21 @@ else {
 
 #Extracts the downloaded Apache Tomcat program to a user specified location. TODO Code both 32 and 64-bit logic for extraction.
 function Extract-Tomcat {
-  if { #Windows Server 2012 and higher logic here
+  if ((Get-CimInstance Win32_OperatingSystem).version -gt "6.1.7600"){ #Windows Server 2012 and higher logic here
 
   }
 else{ #Windows Server 2012 and lower here logic here
-
+  Add-Type -assembly "system.io.compression.filesystem"
+  [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
+  $destination = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location where you want to extract Tomcat to", "Unzip Location");
+  $downloadfile = Get-childitem -Path $filepath -Name "apache-*"
+  if(-Not(Test-Path -Path $destination)){
+    New-Item -ItemType directory -Path $destination > $null;
+    }
+  [io.compression.zipfile]::ExtractToDirectory($FilePath, $destination);
   }
+  [System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded to ' + $filepath,"Download Success");
 }
-
 function Install-JavaRE {
   if((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
   #Read working directory paths by using the user supplied path stored in @filepath
