@@ -16,4 +16,4 @@ Test-IsAdmin
 <# Invoke the Get-Software function and assign the output to variable $LMSoftwareInventory.
 #>
 
-$LMSoftwareInventory = Get-Software | ft -Property DisplayName,InstallLocation | Out-String
+$LMSoftwareInventory = Get-InstalledJava | Format-Wide -Property InstallLocation -Column 1 | Out-string

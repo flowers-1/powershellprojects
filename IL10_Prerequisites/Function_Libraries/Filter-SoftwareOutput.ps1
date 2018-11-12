@@ -211,3 +211,5 @@ function Get-InstalledTomcat {
     }
   }
 }
+
+function Filter-SoftwareOutput

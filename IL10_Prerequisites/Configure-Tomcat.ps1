@@ -14,8 +14,8 @@ things:
 Test-IsAdmin
 
 <# Get a list of the installed programs on the local machine using registry keys for generation. Once the list is generated, output the
-   results to a formatted table assigned to variable. 
+   results to a formatted table assigned to variable.
 #>
 
-$jhome = Get-Software
-$tmctversion = Get-Software
+$jhome = Get-InstalledJava
+$tmctversion = Get-InstalledTomcat
