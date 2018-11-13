@@ -26,7 +26,7 @@ function Get-Tomcat {
 
 function Install-JavaRE {
   if((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
-  #Read working directory paths by using the user supplied path stored in @filepath
+  #Read working directory paths by using the user supplied path stored in @word (working directory)
     [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
     $workd = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to save the JavaRE installer to", "Save As");
     if(-Not(Test-Path -Path $workd)){
@@ -55,8 +55,8 @@ function Install-JavaRE {
     while($doneDT -gt (Get-Date)) {
         $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
         $percent = ($seconds - $secondsLeft) / $seconds * 100
-        Write-Progress -Activity "Sleeping" -Status "Sleeping..." -SecondsRemaining $secondsLeft -PercentComplete $percent
-        [System.Threading.Thread]::Sleep(180)
+        Write-Progress -Activity "Installing" -Status "Installing..." -SecondsRemaining $secondsLeft -PercentComplete $percent
+        [System.Threading.Thread]::Sleep(90)
     }
     Write-Progress -Activity "Installing the Java Runtime Environment" -Status "Installing, please standby..." -SecondsRemaining 0 -Completed
 
@@ -93,8 +93,8 @@ function Install-JavaRE {
     while($doneDT -gt (Get-Date)) {
         $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
         $percent = ($seconds - $secondsLeft) / $seconds * 100
-        Write-Progress -Activity "Sleeping" -Status "Sleeping..." -SecondsRemaining $secondsLeft -PercentComplete $percent
-        [System.Threading.Thread]::Sleep(180)
+        Write-Progress -Activity "Installing" -Status "Installing..." -SecondsRemaining $secondsLeft -PercentComplete $percent
+        [System.Threading.Thread]::Sleep(90)
     }
     Write-Progress -Activity "Installing the Java Runtime Environment" -Status "Installing, please standby..." -SecondsRemaining 0 -Completed
 
