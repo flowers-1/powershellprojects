@@ -8,11 +8,10 @@ The method of downloading the installer files is Background Intelligent Transfer
 
 #Downloads either the 32 or 64-bit Apache Tomcat program from an official mirror, depending on the users OS Architecture, and saves it to a user specified location and then extracts it to the same location.
 function Get-Tomcat {
-	if((gwmi win32_operatingsystem | Select osarchitecture).osarchitecture -eq "64-bit"){
+	if((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit"){
     [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
 		$filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to download and extract Tomcat to", "File Operation");
 		Start-BitsTransfer -Source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x64.zip" -Destination $filepath
-		$source = Get-ChildItem -Path $filepath\* -Include apache *.zip
 		[io.compression.zipfile]::ExtractToDirectory(($source, $filepath))
 	}
 	else {
@@ -22,7 +21,7 @@ function Get-Tomcat {
 		$source = Get-ChildItem -Path $filepath1\* -Include apache *.zip
 		[io.compression.zipfile]::ExtractToDirectory(($source, $filepath))
 	}
-	[System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded and successfully extracted to ' + $filepath,"Download Success");
+	[System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded and successfully extracted to: ' + $filepath,"Download Success");
 
 function Install-JavaRE {
   if((gwmi win32_operatingsystem | select osarchitecture).osarchitecture -eq "64-bit") {
