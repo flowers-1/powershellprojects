@@ -49,7 +49,7 @@ function Install-JavaRE {
     #Install silently
     Start-Process -FilePath "$workd\jreInstall.exe" -ArgumentList INSTALLCFG="$workd\jreInstall.cfg"
 
-    #Wait 180 seconds for the installation to finish
+    #Wait 80 seconds for the installation to finish
     $doneDT = (Get-Date).AddSeconds($seconds)
     while($doneDT -gt (Get-Date)) {
         $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
@@ -87,7 +87,7 @@ function Install-JavaRE {
     #Install silently
     Start-Process -FilePath "$workd\jreInstall.exe" -ArgumentList INSTALLCFG="$workd\jreInstall.cfg"
 
-    #Wait 180 seconds for the installation to finish
+    #Wait 80 seconds for the installation to finish
     $doneDT = (Get-Date).AddSeconds($seconds)
     while($doneDT -gt (Get-Date)) {
         $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
