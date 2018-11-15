@@ -1,13 +1,14 @@
 # PowerShell Automation AppServer Installation
 
-IL10 Prerequisites for App Server installation
+###### IL10 Prerequisites for App Server installation
 
-These sets of scripts are intended to supplement the Windows installer and handle the configuration of the prerequisites for the Application Server. These
-pre-requisites are as follows:
+These sets of scripts are intended to supplement the Windows installer and handle the prerequisites for the Application Server. These
+prerequisites are as follows:
 
   1. Installation and configuration of the Apache Tomcat package;
   2. Installation and Configuration of the Oracle Java platform;
-  3. Configuration of the Java environment variables for the system;
+  3. Configuration of the Java environment variables for the system.
 
-These scripts are made to prevent human error on the client-side when installing and configuring the program for the first time. Also includes custom
-functional dependency libraries.
+The purpose of these scripts are to prevent human-error and reduce the technical knowledge burden that some of the installation could cause.
+
+*For more information, please see the documentation located in the "/help" folder*

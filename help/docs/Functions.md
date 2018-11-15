@@ -1,17 +1,42 @@
-Introduction
-  There are four external functions which are located in the "Function_Libraries" folder. These functions are as follows:
-    1. Download-Requirements
-    2. Filter-SoftwareOutput
-    3. Get-Software
-    4. Test-IsAdmin
-  These functions have been separated out in order to make the main code more readable and clean. Below are the descriptions of each library and their subroutines.
+## Functional Dependency Libraries
 
-Library: Download-Requirements
-  This library is made up of three functions:
+##### Introduction
+  Four custom functions are included in this script package. These functions are located under the "/lib" folder and are as follows:
+
+    1. Download-Requirements.ps1
+    2. Filter-SoftwareOutput.ps1
+    3. Get-Software.ps1
+    4. Test-IsAdmin.ps1
+
+  The following sections will go into further detail about what each of the functions does.
+
+
+
+##### Library: *Download-Requirements*
+
+  This library is made up of two functions:
     1. Get-Tomcat
-    2. Extract-Tomcat
-    3. Install-JavaRE
-  The first function, Get-Tomcat, uses the API call GetWindowsManagementInstrumentation (GWMI) to query the OS for its bittiness. Depending on the result of the GWMI call, the function then invokes the subsystem, Microsoft.VisualBasic, to display a window to the user to collect the location where the Apache Tomcat ZIP file should be downloaded to. Once the user inputs the file path (in format "<drive_letter>:\<Path>"), a test is then performed on the input to determine if the path entered exists. This is done through the use of the command 'Test-Path'. If the path does not exist, the command 'New-Item' is invoked to create the directory structure. Once the directory structure is created, the current session will invoke a Background Intelligent Transfer Service (BITS) session to the official Tomcat mirror and download the ZIP file for either the 32 or 64-bit Tomcat - depending on the result of the GWMI API result. Currently this is download session is hard-coded to a specific URI. In the future, this should be a relative path so that the Tomcat version downloaded is determined by the version of IL installed.
+    2. Get-JavaRE
+
+  ###### Subroutine: Get-Tomcat
+
+This first function performs two critical functions:
+    - Downloads the Apache Tomcat archive from an official mirror; and
+    - Extracts the downloaded archive to a location specified by the user.
+
+The first part of the function
+
+`(gwmi win32_operatingsystem | select osarchitecture).osarchitecture`
+
+
+invokes the "Windows Management Instrumentation" runtime from within the shell and queries the local machine for the bittiness of the OS. This is returned in the format `64-bit` or `32-bit`. Depending on the returned value, the script will download the appropriate version of Apache Tomcat. Before the download begins, the script will present the user with a prompt to enter a location to save the archive file and store the user entered location to the variable `$filepath`. A simple validation routine on the user input is then run
+
+`if(-Not(Test-Path -Path $filepath)){  New-Item -ItemType directory -Path $filepath > $null }`
+
+If the path entered exists, do nothing. If the path does not exist, create the directory tree and send any `stderr` messages to `null`.
+Once the folder path has been validated, a BITS (Background Intelligent Transfer Session) runtime is invoked using the command `Start-BitsTransfer` and downloads the specific bit-flavor of Tomcat to the user defined path.
+
+
 
   The second function, Extract-Tomcat, is fairly self-explanatory. This function will extract the ZIP file to a user-specified location. This is accomplished using the 'Extract-Archive' (or Expand-Archive) function. In order to gather the users' desired extraction location, a VBasic routine (Microsoft.VisualBasic) will display a window to the user to collect the location where the Tomcat platform should be extracted. The window will only accept a file path in the format "<drive_letter>:\<path>". Once this information is collected, a test will be performed on the input to determine if the path entered exists (Test-Path). If the path does not exist, the command will create the directory structure for it.
 
