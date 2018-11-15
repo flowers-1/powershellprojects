@@ -18,7 +18,7 @@ function Get-Tomcat {
     [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic') | Out-Null;
 		$filepath = [Microsoft.VisualBasic.Interaction]::InputBox("Please enter the location you want to download and extract Tomcat to", "File Operation");
 		Start-BitsTransfer -Source "http://apache.cs.utah.edu/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34-windows-x86.zip" -Destination $filepath
-		$source = Get-ChildItem -Path $filepath1\* -Include apache *.zip
+		#$source = Get-ChildItem -Path $filepath\* -Include apache *.zip
 		[io.compression.zipfile]::ExtractToDirectory(($source, $filepath))
 	}
 	[System.Windows.MessageBox]::Show('Apache Tomcat has been downloaded and successfully extracted to: ' + $filepath,"Download Success");
