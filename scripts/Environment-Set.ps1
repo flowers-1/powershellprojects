@@ -1,6 +1,6 @@
 #loads the script Get-Software into the library for access in other scripts.DESCRIPTION
-. "..\Function_Libraries\Get-Software.ps1"
-. "..\Function_Libraries\Test-IsAdmin.ps1"
+. "..\lib\Get-Software.ps1"
+. "..\lib\Test-IsAdmin.ps1"
 <#Check for Admin rights on the current run. This could also be accomplished via #requires -RunAsAdministrator. However, this could be more robust. #>
 <#
         .SYNOPSIS

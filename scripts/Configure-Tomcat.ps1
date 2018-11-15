@@ -6,9 +6,9 @@ things:
     4. Configure the program as laid out in the install guide, asking for user input when necessary.
 #>
 #loads the script Get-Software into the library for access in other scripts.
-. "..\Function_Libraries\Get-Software.ps1"
-. "..\Function_Libraries\Test-IsAdmin.ps1"
-. "..\Function_Libraries\Filter-SoftwareOutput.ps1"
+. "..\lib\Get-Software.ps1"
+. "..\lib\Test-IsAdmin.ps1"
+. "..\lib\Filter-SoftwareOutput.ps1"
 #Checks for Administrative rights on the current running installer session.
 
 Test-IsAdmin
