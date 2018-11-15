@@ -9,4 +9,5 @@ pre-requisites are as follows:
   2. Installation and Configuration of the Oracle Java platform;
   3. Configuration of the Java environment variables for the system;
 
-These scripts are made to prevent human error on the client-side when installing and configuring the program for the first time. Also includes custom functional dependency libraries.
+These scripts are made to prevent human error on the client-side when installing and configuring the program for the first time. Also includes custom
+functional dependency libraries.
