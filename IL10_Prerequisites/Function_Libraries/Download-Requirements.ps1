@@ -93,7 +93,7 @@ function Install-JavaRE {
         $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
         $percent = ($seconds - $secondsLeft) / $seconds * 100
         Write-Progress -Activity "Installing" -Status "Installing..." -SecondsRemaining $secondsLeft -PercentComplete $percent
-        [System.Threading.Thread]::Sleep(90)
+        [System.Threading.Thread]::Sleep(80)
     }
     Write-Progress -Activity "Installing the Java Runtime Environment" -Status "Installing, please standby..." -SecondsRemaining 0 -Completed
 
