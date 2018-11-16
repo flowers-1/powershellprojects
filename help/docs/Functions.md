@@ -30,7 +30,7 @@ Once the folder path has been validated, a BITS (Background Intelligent Transfer
 
 In both bittiness cases, once Tomcat is downloaded, the script uses the `ExtractToDirectory` method from the Microsoft C# runtime - `io.compression.zipfile` to extract the Tomcat archive to a user defined location, `$destination`, from the location it was downloaded to. Due to the constraints on inter-OS PowerShell commands and to prevent errors between system types, it is easier to perform the low-level API call then trying to invoke a native command.
 
-###### Subroutine: Install-JavaRE
+###### Subroutine 2: Install-JavaRE
 
 In a similar vein to the `Get-Tomcat` routine, the `Install-JavaRE` routine begins by querying the OS for its bittiness (which is returned in the format of either `32-bit` or `64-bit`) using the WMI runtime command:
 
