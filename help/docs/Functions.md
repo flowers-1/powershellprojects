@@ -14,7 +14,7 @@
 
 ##### A) *Download-Requirements*
 
-##### *Subroutine 1*: Get-Tomcat
+###### Subroutine 1: Get-Tomcat
 
 The first part of the function
 
