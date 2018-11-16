@@ -48,7 +48,7 @@ if(-Not(Test-Path -Path $workd)){
  }
 ```
 
-If the path exists, do nothing. If it [the path] does not exist, create the directory structure and send all `stdout` notifications to `null`.
+If the path exists, do nothing. If it does not exist, create the directory structure and send all `stdout` notifications to `null`.
 Because we want the entire install process to be invisible to the user, we create a configuration (.cfg) file containing the information for the installer. This configuration file contains the following paramters:
 
 ```
@@ -59,3 +59,8 @@ REMOVEOUTOFDATEJRES = 1 #(removes any installed Java that is below installed ver
 ```
 
 This file is then placed in the location where the installer was downloaded to, and saved as `jreInstall.cfg`.
+When the installer is invoked, we initialize it to perform a silent install: `Start-Process -FilePath "$workd\jreInstall.exe" -ArgumentList INSTALLCFG="$workd\jreInstall.cfg"` While the installer is running in the background, we monitor for completion by querying the system process list for the executable `java.exe` using the following command:
+
+`wmic PROCESS where "name like '%java%'" get Processid,Caption,Commandline`
+
+We then query the system every 15 seconds to check for the running process. If the process is running, sleep for 15 seconds and then run again. Once the script detects that the process is no longer running, display a notification to the user that Java was installed successfully and then remove both the installer and the .cfg file logging any errors to a text file.
