@@ -23,6 +23,6 @@ GET_SOFTWARE FUNCTION LIBRARY -
 The function has been designed and works. Next step to take the output of the function and apply filters to it so that all unnecessary software is ignored and only the software required for the installation of IL10 is installed and configured properly. This can either be done in the same library or a new library can be created and called as necessary. For now, a separate library will be created for ease of testing, which once validated it works, the library will be merged into an existing library.
 
 
-DOWNLOAD_REQUIREMENTS LIBRARY -
+- [x] DOWNLOAD_REQUIREMENTS LIBRARY -
 
 This function will have two separate parts that are able to be called independently of each other. The first function - Get-Tomcat detects the architecture of the OS and then downloads the appropriate version of Tomcat. Before downloading, it prompts the user for the location where the installer will be saved to. Once the input is detected, it validates whether or not the directory structure exists; if it doesn't exist, it creates it. The second half of this function will extract and configure the program. The second part of the library will download and configure the Java platform. It will detect the architecture of the OS and then download the appropriate version of Java. Before downloading, it will ask the user for the location where the installer will be saved to. Once the input is received by the program, it detects whether or not the directory structure exists; if it doesn't, it creates it.
