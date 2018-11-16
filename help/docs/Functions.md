@@ -23,7 +23,11 @@ The first part of the function
 
 invokes the "Windows Management Instrumentation" (WMI) runtime from within the shell and queries the local machine for the bittiness of the OS. This is returned in the format `64-bit` or `32-bit`. Depending on the returned value, the script will download the appropriate version of Apache Tomcat. Before the download begins, the script will present the user with a prompt to enter a location to save the archive file and store the user entered location to the variable `$filepath`. A simple validation routine on the user input is then run
 
-`if(-Not(Test-Path -Path $filepath)){  New-Item -ItemType directory -Path $filepath > $null }`
+```
+if(-Not(Test-Path -Path $workd)){
+   New-Item -ItemType directory -Path $workd > $null
+ }
+```
 
 to test if the path entered exists. If the path exists, do nothing. If the path does not exist, create the directory tree and send any `stdout` messages to `null`.
 Once the folder path has been validated, a BITS (Background Intelligent Transfer Session) runtime is invoked using the command `Start-BitsTransfer` and downloads the specific bittiness-flavor of Tomcat to the user defined path.
@@ -36,4 +40,22 @@ In a similar vein to the `Get-Tomcat` routine, the `Install-JavaRE` routine begi
 
 `(gwmi win32_operatingsystem | select osarchitecture).osarchitecture`
 
-Depending on what is returned from that command, the function will then download the appropriate Java Runtime from Oracle.
+Depending on what is returned from that command, the function will then download the appropriate Java Runtime Installer from Oracle and save it to a user determined location `$workd`. Once the file-path has been entered, the path will be validated thus:
+
+```
+if(-Not(Test-Path -Path $workd)){
+   New-Item -ItemType directory -Path $workd > $null
+ }
+```
+
+If the path exists, do nothing. If it [the path] does not exist, create the directory structure and send all `stdout` notifications to `null`.
+Because we want the entire install process to be invisible to the user, we create a configuration (.cfg) file containing the information for the installer. This configuration file contains the following paramters:
+
+```
+INSTALL_SILENT = Enable #(enables installation without prompts)
+AUTO_UPDATE = Enable #(enables and checks for newest version of Java)
+SPONSORS = Disable #(disables the showing of "Ads" during the install)
+REMOVEOUTOFDATEJRES = 1 #(removes any installed Java that is below installed version)
+```
+
+This file is then placed in the location where the installer was downloaded to, and saved as `jreInstall.cfg`.
