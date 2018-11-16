@@ -28,7 +28,7 @@ invokes the "Windows Management Instrumentation" (WMI) runtime from within the s
 to test if the path entered exists. If the path exists, do nothing. If the path does not exist, create the directory tree and send any `stdout` messages to `null`.
 Once the folder path has been validated, a BITS (Background Intelligent Transfer Session) runtime is invoked using the command `Start-BitsTransfer` and downloads the specific bittiness-flavor of Tomcat to the user defined path.
 
-In both bittiness cases, once Tomcat is downloaded, the script uses the `ExtractToDirectory` method from the Microsoft C# runtime - `io.compression.zipfile` to extract the Tomcat archive to a user defined location, `$destination`, from the location it was downloaded to. Due to the constraints on inter-OS PowerShell commands and to prevent errors between system types, it is easier to perform the low-level API call then trying to invoke a native command.
+In both bittiness cases, once Tomcat is downloaded, the script uses the `ExtractToDirectory` method from the C# runtime - `io.compression.zipfile` to extract the Tomcat archive to a user defined location, `$destination`, from the location it was downloaded to `$filepath`. Due to the constraints on inter-OS PowerShell commands and to prevent errors between system types, it is easier to perform the low-level API call then trying to invoke a native command.
 
 ###### Subroutine 2: Install-JavaRE
 
