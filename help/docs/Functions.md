@@ -12,7 +12,7 @@
 
 ### II. Libraries
 
-##### A) *Download-Requirements*
+##### A) Download-Requirements
 
 ###### Subroutine 1: Get-Tomcat
 
@@ -63,4 +63,13 @@ When the installer is invoked, we initialize it to perform a silent install: `St
 
 `wmic PROCESS where "name like '%java%'" get Processid,Caption,Commandline`
 
-We then query the system every 15 seconds to check for the running process. If the process is running, sleep for 15 seconds and then run again. Once the script detects that the process is no longer running, display a notification to the user that Java was installed successfully and then remove both the installer and the .cfg file logging any errors to a text file.
+We then query the system every 15 seconds to check for the running process. If the process is running, sleep for 15 seconds and then run again. Once the script detects that the process is no longer running, display a notification to the user that Java was installed successfully and then remove both the installer and the .cfg file, logging any errors to a text file.
+
+
+##### B) Filter-SoftwareOutput
+
+
+##### C) Get-Software
+
+
+##### D) Test-IsAdmin
