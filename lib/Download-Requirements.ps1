@@ -49,15 +49,8 @@ function Install-JavaRE {
     #Install silently
     Start-Process -FilePath "$workd\jreInstall.exe" -ArgumentList INSTALLCFG="$workd\jreInstall.cfg"
 
-    #Wait 80 seconds for the installation to finish
-    $doneDT = (Get-Date).AddSeconds($seconds)
-    while($doneDT -gt (Get-Date)) {
-        $secondsLeft = $doneDT.Subtract((Get-Date)).TotalSeconds
-        $percent = ($seconds - $secondsLeft) / $seconds * 100
-        Write-Progress -Activity "Installing" -Status "Installing..." -SecondsRemaining $secondsLeft -PercentComplete $percent
-        [System.Threading.Thread]::Sleep(90)
-    }
-    Write-Progress -Activity "Installing the Java Runtime Environment" -Status "Installing, please standby..." -SecondsRemaining 0 -Completed
+		#Query system process list for the java installer executable. If the installer is running, sleep for 10 seconds and query again. Once the query returns $null (the process is no longer running) exit loop.DESCRIPTION
+		#TODO Add logic for wmic process query loop.
 
     #Remove the installer file from working directory
     rm -Force $workd\jre*.exe
