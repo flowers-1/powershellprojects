@@ -67,7 +67,7 @@ We then query the system every 15 seconds to check for the running process. If t
 
 
 ##### B) Filter-SoftwareOutput
-This function is made up of two subroutines:
+
 
 ##### C) Get-Software
 
