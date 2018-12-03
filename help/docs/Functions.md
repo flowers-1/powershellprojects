@@ -95,5 +95,6 @@ Once the information is bound to the variables, a new object - `pscustomobject` 
 ##### B) Filter-SoftwareOutput
 This library has been deprecated and has been replaced by filters applied in-line.
 
+
 ##### D) Test-IsAdmin
 This function is meant to be invoked at the beginning of each script's runtime. The purpose is to make sure that when the script is run, it runs in an elevated session. If the script detects that the session is not elevated, it will error out and request the script be re-run with administrative privileges.
