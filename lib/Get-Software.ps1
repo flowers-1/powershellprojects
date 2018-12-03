@@ -98,8 +98,6 @@ function Get-InstalledJava {
                     DisplayName = $DisplayName;
                     UninstallString = $UninstallString;
                     InstallLocation = $InstallLocation;
-                    #HelpLink = $thisSubKey.GetValue('HelpLink');
-                    #EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize')*1024)/1MB,2));
                   }
                   $Object.pstypenames.insert(0, 'System.Software.Inventory');
                   Write-Output $Object;
@@ -201,9 +199,7 @@ function Get-InstalledTomcat {
                   $Object = [pscustomobject] @{
                     DisplayName = $DisplayName;
                     UninstallString = $UninstallString;
-                    #InstallLocation = $InstallLocation;
-                    #HelpLink = $thisSubKey.GetValue('HelpLink');
-                    #EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize')*1024)/1MB,2));
+                    InstallLocation = $InstallLocation;
                   }
                   $Object.pstypenames.insert(0, 'System.Software.Inventory');
                   Write-Output $Object;
