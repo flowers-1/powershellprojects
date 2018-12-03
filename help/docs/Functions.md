@@ -66,10 +66,34 @@ When the installer is invoked, we initialize it to perform a silent install: `St
 We then query the system every 15 seconds to check for the running process. If the process is running, sleep for 15 seconds and then run again. Once the script detects that the process is no longer running, display a notification to the user that Java was installed successfully and then remove both the installer and the .cfg file, logging any errors to a text file.
 
 
-##### B) Filter-SoftwareOutput
-
 
 ##### C) Get-Software
+This library consists of two subroutines - get the installed version of the Oracle Java platform and the installed version of Apache Tomcat.
 
+In order to get a complete and accurate list of the software that is installed on the source machine, the script connects to the local machine and sets the following registry locations to the variable `$Paths` -
+
+`SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall` (32-bit software key location)
+
+AND
+
+`SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall` (64-bit software key location)
+
+Once those registry locations are set, the Win32 command `OpenRemoteBaseKey` is invoked to read the registry keys in question. Once the registry keys are opened for reading the variables `$regkey` and `$subkeys` are instantiated with the full key path and the sub-keys underneath. Once the variables are instantiated the function will then loop through each of the sub-keys, generating the following information, and binding them to the following variables:
+
+```
+$DisplayName = Display Name
+$Date = Install Date
+$Publisher = Publisher
+$Version = Display Version
+$UninstallString = Uninstall Command
+$InstallLocation = Location of Installed Program
+$InstallSource = Location of the cached installer file (MSI)
+```
+Once the information is bound to the variables, a new object - `pscustomobject` is created and the variables are passed to `write-object` which outputs the data to an array and stored as variable `$Object`.
+
+
+##### B) Filter-SoftwareOutput
+This library has been deprecated and has been replaced by filters applied in-line.
 
 ##### D) Test-IsAdmin
+This function is meant to be invoked at the beginning of each script's runtime. The purpose is to make sure that when the script is run, it runs in an elevated session. If the script detects that the session is not elevated, it will error out and request the script be re-run with administrative privileges.
