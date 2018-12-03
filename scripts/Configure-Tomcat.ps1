@@ -8,7 +8,7 @@ things:
 #loads the script Get-Software into the library for access in other scripts.
 . "..\lib\Get-Software.ps1"
 . "..\lib\Test-IsAdmin.ps1"
-. "..\lib\Filter-SoftwareOutput.ps1"
+. "..\lib\Download-Requirements"
 #Checks for Administrative rights on the current running installer session.
 
 Test-IsAdmin
