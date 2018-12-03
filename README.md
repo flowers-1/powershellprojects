@@ -11,4 +11,4 @@ prerequisites are as follows:
 
 The purpose of these scripts are to prevent human-error and reduce the technical knowledge burden that some of the installation could cause.
 
-*For more information, please see the documentation located in the "/help" folder*
+*For more information, please see the documentation located in the help folder*
