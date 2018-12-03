@@ -14,6 +14,6 @@ function Test-IsAdmin {
         $principal = New-Object Security.Principal.WindowsPrincipal -ArgumentList $identity;
         return $principal.IsInRole( [Security.Principal.WindowsBuiltInRole]::Administrator );
     } catch {
-        throw [System.Windows.MessageBox]::Show('Session is not running as Administrator. Please reset and run as administrator','Error');
+        throw [System.Windows.MessageBox]::Show('Session is not running as Administrator. Please restart job as administrator','Administrative Permissions Error');
     }
 }
