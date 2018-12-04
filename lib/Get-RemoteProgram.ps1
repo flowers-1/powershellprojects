@@ -86,10 +86,7 @@ Will retrieve the InstallDate of all components that match the regex pattern of 
 #>
     [CmdletBinding(SupportsShouldProcess=$true)]
     param(
-        [Parameter(ValueFromPipeline              =$true,
-                   ValueFromPipelineByPropertyName=$true,
-                   Position=0
-        )]
+        [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,Position=0)]
         [string[]]
             $ComputerName = $env:COMPUTERNAME,
         [Parameter(Position=0)]
