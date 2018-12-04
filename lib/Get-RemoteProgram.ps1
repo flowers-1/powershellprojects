@@ -102,7 +102,7 @@ Function Get-RemoteProgram {
         $RegistryLocation = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\',
                             'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\'
 
-        if ($psversiontable.psversion.major -gt 2) { #Depending on the OS, this should be modified
+        if ($psversiontable.psversion.major -gt 2) {
             $HashProperty = [ordered]@{}
         } else {
             $HashProperty = @{}
