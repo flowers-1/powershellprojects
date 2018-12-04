@@ -73,7 +73,6 @@ Get-RemoteProgram -IncludeProgram ^Office -ProgramRegExMatch
 Description
 Will retrieve the InstallDate of all components that match the regex pattern of ^Office.*, which means any ProgramName starting with the word Office
 #>
-
 Function Get-RemoteProgram {
 
     [CmdletBinding(SupportsShouldProcess=$true)]
@@ -97,7 +96,6 @@ Function Get-RemoteProgram {
         [int]
             $SimilarWord
     )
-
     begin {
         $RegistryLocation = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\',
                             'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\'
@@ -115,7 +113,6 @@ Function Get-RemoteProgram {
             }
         }
     }
-
     process {
         foreach ($Computer in $ComputerName) {
             try {
