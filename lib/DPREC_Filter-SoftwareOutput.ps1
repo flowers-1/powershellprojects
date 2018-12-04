@@ -1,6 +1,6 @@
 <#
 
-
+THIS FUNCTION HAS BEEN DEPRECATED AND IS NO LONGER IN USE.
 
 #>
 function Get-InstalledJava {
