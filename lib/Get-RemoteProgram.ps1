@@ -113,7 +113,7 @@ Will retrieve the InstallDate of all components that match the regex pattern of 
         $RegistryLocation = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\',
                             'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\'
 
-        if ($psversiontable.psversion.major -lt 4) { #Depending on the OS, this should be modified
+      <#  if ($psversiontable.psversion.major -lt 4) { #Depending on the OS, this should be modified
             $HashProperty = [ordered]@{}
         } else {
             $HashProperty = @{}
@@ -124,7 +124,7 @@ Will retrieve the InstallDate of all components that match the regex pattern of 
             if ($LastAccessTime) {
                 $SelectProperty += 'LastAccessTime'
             }
-        }
+        } #>
     }
 
     process {
