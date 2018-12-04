@@ -1,35 +1,24 @@
-Function Get-RemoteProgram {
 <#
 .Synopsis
 Generates a list of installed programs on a computer
-
 .DESCRIPTION
 This function generates a list by querying the registry and returning the installed programs of a local or remote computer.
-
 .PARAMETER ComputerName
 The computer to which connectivity will be checked
-
 .PARAMETER Property
 Additional values to be loaded from the registry. Can contain a string or an array of string that will be attempted to retrieve from the registry for each program entry
-
 .PARAMETER IncludeProgram
 This will include the Programs matching that are specified as argument in this parameter. Wildcards are allowed. Both Include- and ExcludeProgram can be specified, where IncludeProgram will be matched first
-
 .PARAMETER ExcludeProgram
 This will exclude the Programs matching that are specified as argument in this parameter. Wildcards are allowed. Both Include- and ExcludeProgram can be specified, where IncludeProgram will be matched first
-
 .PARAMETER ProgramRegExMatch
 This parameter will change the default behaviour of IncludeProgram and ExcludeProgram from -like operator to -match operator. This allows for more complex matching if required.
-
 .PARAMETER LastAccessTime
 Estimates the last time the program was executed by looking in the installation folder, if it exists, and retrieves the most recent LastAccessTime attribute of any .exe in that folder. This increases execution time of this script as it requires (remotely) querying the file system to retrieve this information.
-
 .PARAMETER ExcludeSimilar
 This will filter out similar programnames, the default value is to filter on the first 3 words in a program name. If a program only consists of less words it is excluded and it will not be filtered. For example if you Visual Studio 2015 installed it will list all the components individually, using -ExcludeSimilar will only display the first entry.
-
 .PARAMETER SimilarWord
 This parameter only works when ExcludeSimilar is specified, it changes the default of first 3 words to any desired value.
-
 .EXAMPLE
 Get-RemoteProgram
 
@@ -84,6 +73,9 @@ Get-RemoteProgram -IncludeProgram ^Office -ProgramRegExMatch
 Description
 Will retrieve the InstallDate of all components that match the regex pattern of ^Office.*, which means any ProgramName starting with the word Office
 #>
+
+Function Get-RemoteProgram {
+
     [CmdletBinding(SupportsShouldProcess=$true)]
     param(
         [Parameter(ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,Position=0)]
